@@ -1,0 +1,16 @@
+.thumbnail-icon {
+    text-align: center;
+    color: black;
+    text-decoration: none;
+}
+
+.thumbnail-icon:hover, .thumbnail-icon:focus {
+    text-decoration: none;
+}
+
+.thumbnail-icon:focus, .focused
+{
+    border-color: #337ab7;
+    color: #337ab7;
+    box-shadow: 0px 0px 5px #337ab7;
+}

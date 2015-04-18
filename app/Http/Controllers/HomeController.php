@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use App\Subject;
+
 class HomeController extends Controller {
 
 	/*
@@ -28,9 +30,8 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function dashboard()
 	{
-		return view('home');
+		return view('dashboard')->withSubjects(Subject::ofCurrentUser()->get());
 	}
-
 }

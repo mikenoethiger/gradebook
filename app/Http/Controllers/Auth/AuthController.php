@@ -7,6 +7,20 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller {
 
+    /*
+     * Redirect path after succesful registring/logging in
+     * Will be used by the AuthenticatesAndRegistersUsers trait
+     * Look at AuthenticatesAndRegistersUsers.redirectPath()
+     */
+    private $redirectTo = "/dashboard";
+
+    /*
+     * Redirect path after logout
+     * Will be used by the AuthenticatesAndRegistersUsers trait
+     * Look at AuthenticatesAndRegistersUsers.getLogout()
+     */
+    private $redirectAfterLogout = "/auth/login";
+
 	/*
 	|--------------------------------------------------------------------------
 	| Registration & Login Controller
@@ -32,7 +46,15 @@ class AuthController extends Controller {
 		$this->auth = $auth;
 		$this->registrar = $registrar;
 
-		$this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => 'getLogout']);
 	}
 
+    /**
+     * Override method from the AuthenticatesAndRegistersUsers trait
+     *
+     * @return string
+     */
+    protected function getFailedLoginMessage() {
+        return "E-Mail oder Passwort inkorrekt.";
+    }
 }

@@ -11,11 +11,24 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('/dashboard', 'HomeController@dashboard');
 
-Route::get('home', 'HomeController@index');
+    Route::resource('/subject', 'SubjectController');
+    Route::post('/subject/restore/{id}', 'SubjectController@restore');
+
+    Route::resource('/grade', 'GradeController');
+    Route::post('/grade/restore/{grade}', 'GradeController@restore');
+
+    Route::resource('/semester', 'SemesterController');
+
+    Route::resource('/exam', 'ExamController');
+});
+
+Route::get('/', 'PublicController@landing');
 
 Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
 ]);

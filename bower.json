@@ -1,6 +1,7 @@
 {
   "name": "Gradebook",
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.5"
+    "startbootstrap-sb-admin-2": "~1.0.5",
+    "jquery.ui": "~1.11.4"
   }
 }
