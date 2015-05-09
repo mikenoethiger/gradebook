@@ -1,9 +1,9 @@
 <?php namespace App\Providers;
 
-use App\Subject;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+// This class does not work! Look at the App\Providers\GbEventServiceProvider class for more information
 class EventServiceProvider extends ServiceProvider {
 
 	/**
@@ -12,9 +12,7 @@ class EventServiceProvider extends ServiceProvider {
 	 * @var array
 	 */
 	protected $listen = [
-		'event.name' => [
-			'EventListener',
-		],
+
 	];
 
 	/**

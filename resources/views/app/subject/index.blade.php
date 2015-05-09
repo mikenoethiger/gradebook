@@ -19,6 +19,8 @@
 @stop
 
 @section('content')
+    @include('subviews.semester-breadcrumb')
+
     <?php
     $headerColumns = ['<i class="fa fa-inbox fa-fw"></i> Fach', '<i class="fa fa-tags fa-fw"></i> Anzahl', '<span class="hidden-xs">Ø Durchschnitt</span><span class="visible-xs">Ø Durchschn.</span>', 'Aktionen'];
     $rows = [];
@@ -40,33 +42,7 @@
     }
     $entityName = "Schulfach";
     $entityNamePlural = "Schulfächer";
-    $createEntityUrl = "/subject/create";
+    $createEntityUrl = $basePath . "/subject/create";
     ?>
     @include('subviews.entitytable')
-@stop
-
-@section('scripts')
-    @parent
-            <!-- DataTables JavaScript -->
-    <script src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#subjects-table').DataTable({
-                responsive: true,
-                paging: false,
-                info: false,
-                dom: '<"toolbar">frtip',
-                renderer: "bootstrap",
-                language: {
-                    "lengthMenu": "Zeige _MENU_ Einträge pro Seite",
-                    "zeroRecords": "Keine Fächer vorhanden",
-                    "info": "Seite _PAGE_ von _PAGES_",
-                    "infoEmpty": "Keine Fächer vorhanden",
-                    "infoFiltered": ""
-                }
-            });
-            $("div.toolbar").html('<a href="/subject/create" class="btn btn-default"><i class="fa fa-plus fa-fw"></i> <span class="hidden-xs">Schulfach hinzufügen</span></a>');
-        });
-    </script>
 @stop

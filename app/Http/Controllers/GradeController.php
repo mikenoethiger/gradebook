@@ -2,12 +2,13 @@
 
 use App\Grade;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
+use App\Services\Shortcut;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class GradeController extends Controller {
@@ -17,9 +18,9 @@ class GradeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Shortcut $shortcut)
 	{
-		return view('grade.index')->withGrades(Grade::ofCurrentUser()->get());
+		return view('app.grade.index')->withGrades($shortcut->getGrades());
 	}
 
 	/**
@@ -27,9 +28,9 @@ class GradeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create(Shortcut $gbRequest)
 	{
-		return view('grade.create')->withSubjects(Subject::ofCurrentUser()->get());
+		return view('app.grade.create')->withSubjects($gbRequest->getSubjects());
 	}
 
 	/**
@@ -45,7 +46,9 @@ class GradeController extends Controller {
         $grade->user_id = Auth::id();
         $grade->save();
 
-        return Redirect::to('/grade')->withMessage("Note wurde erfasst.");
+        $gradeVal = $grade->grade;
+        $subject = $grade->subject->name;
+        return Redirect::to('/dashboard')->withMessage("Note <strong>$gradeVal</strong> in <strong>$subject</strong> wurde erfasst. <a class='alert-link' href='/grade/create'>Weitere Note erfassen.</a>");
 	}
 
 	/**
@@ -87,24 +90,25 @@ class GradeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy(Requests\DestroyGradeRequest $request, $id)
+	public function destroy(Requests\DestroyGradeRequest $request, Shortcut $gbRequest, $gradeId)
 	{
-		$grade = Grade::find($id);
+        Log::info($gradeId);
+		$grade = Grade::find($gradeId);
         $grade->delete();
 
-        $restoreForm = sprintf("<form id='restore-grade' method='post' action='/grade/restore/%s'><input type='hidden' name='_token' value='%s'></form>", $grade->id, csrf_token());
+        $restoreForm = sprintf("<form id='restore-grade' method='post' action='%s/grade/restore/%s'><input type='hidden' name='_token' value='%s'></form>", $gbRequest->getBasePath(), $grade->id, csrf_token());
         $restoreLink = sprintf("<a href='#' class='alert-link' onclick='$(\"#restore-grade\").submit();return false;'>Rückgängig.</a>");
         $message = sprintf("%s Note wurde gelöscht. %s", $restoreForm, $restoreLink);
 
-        return Redirect::to('/grade')->withMessage($message);
+        return Redirect::to($gbRequest->getBasePath() . '/grade')->withMessage($message);
 	}
 
-    public function restore(Requests\RestoreGradeRequest $request, $id)
+    public function restore(Requests\RestoreGradeRequest $request, Shortcut $gbRequest, $id)
     {
         $grade = Grade::withTrashed()->find($id);
         $grade->restore();
 
-        return Redirect::to('/grade')->withMessage('Note wurde wiederhergestellt.');
+        return Redirect::to($gbRequest->getBasePath() . '/grade')->withMessage('Note wurde wiederhergestellt.');
     }
 
 }

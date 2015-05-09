@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Services\Shortcut;
 use App\Subject;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
@@ -30,8 +32,10 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function dashboard()
+	public function dashboard(Shortcut $shortcut)
 	{
-		return view('dashboard')->withSubjects(Subject::ofCurrentUser()->get());
+        $subjects = $shortcut->getSubjects();
+
+		return view('app.dashboard', compact('subjects'));
 	}
 }

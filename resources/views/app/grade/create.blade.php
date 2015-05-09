@@ -13,6 +13,7 @@
 @stop
 
 @section('content')
+    @include('subviews.semester-breadcrumb')
     @if(count($subjects) == 0)
         <div class="row">
             <div class="col-sm-12">
@@ -21,7 +22,7 @@
             </div>
         </div>
     @else
-        <form method="post" action="/grade">
+        <form method="post" action="{{ $basePath . '/grade' }}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div class="row">
@@ -30,6 +31,9 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-tags"></i></span>
                             <input class="form-control" name="grade" placeholder="Note" type="number" step="any">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default" type="button">Erfassen</button>
+                            </span>
                         </div>
                     </div>
 
@@ -54,12 +58,6 @@
                         </a>
                     </div>
                 @endforeach
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-default">Note erfassen</button>
-                </div>
             </div>
         </form>
     @endif

@@ -11,19 +11,28 @@
 |
 */
 
-Route::group(['middleware' => 'auth'], function()
-{
-    Route::get('/dashboard', 'HomeController@dashboard');
 
-    Route::resource('/subject', 'SubjectController');
-    Route::post('/subject/restore/{id}', 'SubjectController@restore');
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'active_school'], function () {
 
-    Route::resource('/grade', 'GradeController');
-    Route::post('/grade/restore/{grade}', 'GradeController@restore');
 
-    Route::resource('/semester', 'SemesterController');
+        Route::group(['middleware' => 'active_semester'], function() {
+            Route::get('/dashboard', 'HomeController@dashboard');
 
-    Route::resource('/exam', 'ExamController');
+            Route::resource('/subject', 'SubjectController');
+            Route::post('/subject/restore/{id}', 'SubjectController@restore');
+
+            Route::resource('/grade', 'GradeController');
+            Route::post('/grade/restore/{grade}', 'GradeController@restore');
+
+            Route::resource('/exam', 'ExamController');
+        });
+
+        Route::resource('/semester', 'SemesterController');
+        Route::put('/semester/change/{semester}', 'SemesterController@change');
+    });
+    Route::resource('/school', 'SchoolController');
+    Route::get('/school/change/{school}', 'SchoolController@change');
 });
 
 Route::get('/', 'PublicController@landing');

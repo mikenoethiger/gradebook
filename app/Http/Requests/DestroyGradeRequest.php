@@ -14,8 +14,7 @@ class DestroyGradeRequest extends Request {
 	public function authorize()
 	{
         $gradeId = $this->route('grade');
-        return Grade::where('id', $gradeId)
-            ->where('user_id', Auth::id())->exists();
+        return Grade::where('id', $gradeId)->where('user_id', Auth::id())->exists();
 	}
 
 	/**

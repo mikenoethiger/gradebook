@@ -27,6 +27,7 @@ function getPanelColor($gradeAverage)
 @stop
 
 @section('content')
+    @include('subviews.semester-breadcrumb')
     <!-- /.row -->
     @if(count($subjects) == 0)
         <div class="row">

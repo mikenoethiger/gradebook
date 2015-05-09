@@ -1,20 +1,22 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
+use App\Semester;
+use App\Services\Shortcut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
-class SemesterController extends Controller {
+class SemesterController extends GradebookController {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Shortcut $appData)
 	{
-		return view('semester.index');
+		return view('app.semester.index')->withSemesters($appData->getActiveSchool()->semesters);
 	}
 
 	/**
@@ -24,7 +26,7 @@ class SemesterController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('app.semester.create');
 	}
 
 	/**
@@ -81,4 +83,11 @@ class SemesterController extends Controller {
 		//
 	}
 
+    public function change(Requests\ChangeSemesterRequest $request, Semester $semester)
+    {
+        $user = Auth::user();
+        $user->active_semester = $semester->id;
+        $user->save();
+        return redirect()->back();
+    }
 }

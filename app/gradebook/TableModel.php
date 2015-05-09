@@ -6,7 +6,7 @@
  * Time: 16:42
  */
 
-namespace app\gradebook;
+namespace app\Gradebook;
 
 
 class TableModel {

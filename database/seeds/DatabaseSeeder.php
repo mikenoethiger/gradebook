@@ -6,30 +6,34 @@ use App\User;
 use App\Subject;
 use App\Grade;
 use App\Icon;
+use App\School;
+use App\Semester;
+use \Illuminate\Support\Facades\Log;
 
-class DatabaseSeeder extends Seeder {
+class DatabaseSeeder extends Seeder
+{
 
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		Model::unguard();
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Model::unguard();
 
         $this->call('UserTableSeeder');
-        $this->command->info('User table seeded!');
 
-        $this->call('SubjectTableSeeder');
-        $this->command->info('Subject table seeded!');
+        $this->call('SchoolTableSeeder');
 
-        $this->call('GradeTableSeeder');
-        $this->command->info('Grade table seeded!');
+        $this->call('SemesterTableSeeder');
 
         $this->call('IconTableSeeder');
-        $this->command->info('Icon table seeded!');
-	}
+
+        $this->call('SubjectTableSeeder');
+
+        $this->call('GradeTableSeeder');
+    }
 }
 
 class UserTableSeeder extends Seeder
@@ -46,61 +50,34 @@ class UserTableSeeder extends Seeder
     }
 }
 
-class SubjectTableSeeder extends Seeder
+class SchoolTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('subjects')->delete();
-        $userId = User::where('email', '=', 'noethiger.mike@gmail.com')->first()->id;
+        DB::table('schools')->delete();
 
-        Subject::create(['name' => 'Teilchenphysik', 'icon' => 'icon-atom', 'user_id' => $userId]);
-        Subject::create(['name' => 'Mathematik', 'icon' => 'icon-maths', 'user_id' => $userId]);
-        Subject::create(['name' => 'Gemoetrie', 'icon' => 'icon-dividers', 'user_id' => $userId]);
-        Subject::create(['name' => 'Physik', 'icon' => 'icon-physics', 'user_id' => $userId]);
-        Subject::create(['name' => 'Chemie', 'icon' => 'icon-chemistry', 'user_id' => $userId]);
-        Subject::create(['name' => 'Deutsch', 'icon' => 'icon-pen', 'user_id' => $userId]);
-        Subject::create(['name' => 'Französisch', 'icon' => 'icon-pen', 'user_id' => $userId]);
-        Subject::create(['name' => 'Englisch', 'icon' => 'icon-pen', 'user_id' => $userId]);
-        Subject::create(['name' => 'Geschichte', 'icon' => 'icon-history', 'user_id' => $userId]);
-        Subject::create(['name' => 'Wirtschaft', 'icon' => 'icon-balance', 'user_id' => $userId]);
-        Subject::create(['name' => 'Musik', 'icon' => 'icon-quaver', 'user_id' => $userId]);
-        Subject::create(['name' => 'Literatur', 'icon' => 'icon-books', 'user_id' => $userId]);
-        Subject::create(['name' => 'Informatik', 'icon' => 'icon-computer-screen', 'user_id' => $userId]);
-        Subject::create(['name' => 'Biologie', 'icon' => 'icon-dna', 'user_id' => $userId]);
-        Subject::create(['name' => 'Finanzwesen', 'icon' => 'icon-money', 'user_id' => $userId]);
-        Subject::create(['name' => 'Finanzbuchhaltung', 'icon' => 'icon-financial-book', 'user_id' => $userId]);
-        Subject::create(['name' => 'Statistik', 'icon' => 'icon-statistics', 'user_id' => $userId]);
-        Subject::create(['name' => 'Ökonomie', 'icon' => 'icon-factory', 'user_id' => $userId]);
-        Subject::create(['name' => 'Recht', 'icon' => 'icon-tribunal', 'user_id' => $userId]);
-        Subject::create(['name' => 'Gesundheit', 'icon' => 'icon-medical', 'user_id' => $userId]);
-        Subject::create(['name' => 'Gesellschaft', 'icon' => 'icon-multiple', 'user_id' => $userId]);
-        Subject::create(['name' => 'Kunst', 'icon' => 'icon-drawing', 'user_id' => $userId]);
-        Subject::create(['name' => 'Ökologie', 'icon' => 'icon-plant', 'user_id' => $userId]);
-        Subject::create(['name' => 'Politik', 'icon' => 'icon-politics', 'user_id' => $userId]);
-        Subject::create(['name' => 'Religion', 'icon' => 'icon-religion', 'user_id' => $userId]);
-        Subject::create(['name' => 'Sport', 'icon' => 'icon-soccer', 'user_id' => $userId]);
-        Subject::create(['name' => 'Astronomie', 'icon' => 'icon-astronomy', 'user_id' => $userId]);
-        Subject::create(['name' => 'Werken', 'icon' => 'icon-tools', 'user_id' => $userId]);
-        Subject::create(['name' => 'Mechanik', 'icon' => 'icon-wrench', 'user_id' => $userId]);
+        $user = User::whereEmail('noethiger.mike@gmail.com')->first();
+
+        $gibb = School::create(['name' => 'GIBB', 'user_id' => $user->id]);
+        $user->active_school = $gibb->id;
+        $user->save();
+        School::create(['name' => 'Gerbrunnen', 'user_id' => $user->id]);
     }
 }
 
-class GradeTableSeeder extends Seeder
+class SemesterTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('grades')->delete();
-        $userId = User::where('email', '=', 'noethiger.mike@gmail.com')->first()->id;
+        DB::table('semesters')->delete();
 
-        $allSubjects = Subject::where('user_id', '=', $userId)->get();
-        foreach ($allSubjects as $subject) {
-            $numberOfGrades = rand(1,10);
-            for ($i = 0; $i < $numberOfGrades; $i++) {
-                $grade = rand(1,6);
-                if ($grade < 6) {
-                    $grade = $grade + round(mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax(),2);
-                }
-                Grade::create(['grade' => $grade, 'subject_id' => $subject->id, 'user_id' => $userId]);
+        $user = User::where('email', '=', 'noethiger.mike@gmail.com')->first();
+
+        $schools = School::whereUserId($user->id)->get();
+        foreach ($schools as $school) {
+            $numberOfSemesters = rand(1, 2);
+            for ($i = 0; $i < $numberOfSemesters; $i++) {
+                $school->addSemester($user);
             }
         }
     }
@@ -142,5 +119,86 @@ class IconTableSeeder extends Seeder
         Icon::create(['class' => 'icon-chemistry']);
         Icon::create(['class' => 'icon-tools']);
         Icon::create(['class' => 'icon-wrench']);
+    }
+}
+
+class SubjectTableSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('subjects')->delete();
+
+        $subjectNames = [
+            'Teilchenphysik',
+            'Mathematik',
+            'Geometrie',
+            'Physik',
+            'Chemie',
+            'Deutsch',
+            'Französisch',
+            'Englisch',
+            'Geschichte',
+            'Wirtschaft',
+            'Musik',
+            'Literatur',
+            'Informatik',
+            'Biologie',
+            'Finanzwesen',
+            'Finanzbuchhaltung',
+            'Statistik',
+            'Ökonomie',
+            'Recht',
+            'Gesundheit',
+            'Gesellschaft',
+            'Kunst',
+            'Ökologie',
+            'Politik',
+            'Religion',
+            'Sport',
+            'Astronomie',
+            'Werken',
+            'Mechanik'
+        ];
+
+        $user = User::where('email', '=', 'noethiger.mike@gmail.com')->first();
+        $semesters = Semester::whereUserId($user->id)->get();
+        $icons = Icon::all()->toArray();
+        foreach ($semesters as $semester) {
+            $numberOfSubjects = rand(2, 5);
+            $randSubjectNames = array_rand($subjectNames, $numberOfSubjects);
+            $randIcons = array_rand($icons, $numberOfSubjects);
+            for ($i = 0; $i < $numberOfSubjects; $i++) {
+                Subject::create([
+                    'name' => $subjectNames[$randSubjectNames[$i]],
+                    'icon' => $icons[$randIcons[$i]]['class'],
+                    'user_id' => $user->id,
+                    'semester_id' => $semester->id
+                ]);
+            }
+        }
+
+    }
+}
+
+class GradeTableSeeder extends Seeder
+{
+    public function run()
+    {
+        DB::table('grades')->delete();
+        $userId = User::where('email', '=', 'noethiger.mike@gmail.com')->first()->id;
+        Log::info($userId);
+
+        $allSubjects = Subject::where('user_id', '=', $userId)->get();
+        foreach ($allSubjects as $subject) {
+            $numberOfGrades = rand(1, 3);
+            for ($i = 0; $i < $numberOfGrades; $i++) {
+                $grade = rand(1, 6);
+                if ($grade < 6) {
+                    $grade = $grade + round(mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax(), 2);
+                }
+                Grade::create(['grade' => $grade, 'subject_id' => $subject->id, 'user_id' => $userId]);
+
+            }
+        }
     }
 }

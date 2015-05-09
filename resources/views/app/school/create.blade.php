@@ -4,15 +4,14 @@ $schoolBreadcrumb = false;
 @extends('app')
 
 @section('title')
-    Notenbuch - Prüfungen
+    Notenbuch - Schule erfassen
 @stop
 
 @section('header')
-    Prüfungen Übersicht
+    Schule erstellen
 @stop
 
 @section('content')
-
     <div class="row">
         <div class="col-sm-12">
             <div class="well well-lg">Coming soon</div>

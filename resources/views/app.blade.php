@@ -20,7 +20,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/dashboard">Notenbuch</a>
+                <a class="navbar-brand" href="{{ url($basePath . '/dashboard') }}">Notenbuch</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -31,9 +31,9 @@
                         <i class="fa fa-plus fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('/grade/create') }}"><i class="fa fa-tags fa-fw"></i> Note</a>
+                        <li><a href="{{ url($basePath . '/grade/create') }}"><i class="fa fa-tags fa-fw"></i> Note</a>
                         </li>
-                        <li><a href="{{ url('/subject/create') }}"><i class="fa fa-inbox fa-fw"></i> Schulfach</a>
+                        <li><a href="{{ url($basePath . '/subject/create') }}"><i class="fa fa-inbox fa-fw"></i> Schulfach</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -58,22 +58,22 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="/dashboard"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="{{ url($basePath . '/dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="/grade"><i class="fa fa-tags fa-fw"></i> Noten</a>
+                            <a href="{{ url($basePath . '/grade') }}"><i class="fa fa-tags fa-fw"></i> Noten</a>
                         </li>
                         <li>
-                            <a href="/subject"><i class="fa fa-inbox fa-fw"></i> Schulfächer</a>
+                            <a href="{{ url($basePath . '/subject') }}"><i class="fa fa-inbox fa-fw"></i> Schulfächer</a>
                         </li>
                         <li>
-                            <a href="/exam"><i class="fa fa-pencil fa-fw"></i> Prüfungen <span class="label label-default" style="float: right;">coming soon</span></a>
+                            <a href="{{ url($basePath) . '/exam' }}"><i class="fa fa-pencil fa-fw"></i> Prüfungen <span class="label label-default" style="float: right;">coming soon</span></a>
                         </li>
                         <li>
-                            <a href="/semester"><i class="fa fa-graduation-cap fa-fw"></i> Semester <span class="label label-default" style="float: right;">coming soon</span></a>
+                            <a href="{{ url($basePath) . '/semester' }}"><i class="fa fa-graduation-cap fa-fw"></i> Semester <span class="label label-default" style="float: right;">coming soon</span></a>
                         </li>
                         <li>
-                            <a href="/school"><i class="fa icon-school fa-fw"></i> Schulen <span class="label label-default" style="float: right;">coming soon</span></a>
+                            <a href="{{ url($basePath . '/school') }}"><i class="fa icon-school fa-fw"></i> Schulen <span class="label label-default" style="float: right;">coming soon</span></a>
                         </li>
                     </ul>
                 </div>

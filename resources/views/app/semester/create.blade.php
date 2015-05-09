@@ -1,11 +1,14 @@
+<?php
+$schoolBreadcrumb = false;
+?>
 @extends('app')
 
 @section('title')
-    Notenbuch - Semester
+    Notenbuch - Semester erfassen
 @stop
 
 @section('header')
-    Semester
+    Semester erstellen
 @stop
 
 @section('content')

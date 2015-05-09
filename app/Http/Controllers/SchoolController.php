@@ -1,9 +1,13 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ExamController extends GradebookController {
+use App\School;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class SchoolController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -12,7 +16,7 @@ class ExamController extends GradebookController {
 	 */
 	public function index()
 	{
-		return view('app.exam.index');
+		return view('app.school.index');
 	}
 
 	/**
@@ -22,7 +26,7 @@ class ExamController extends GradebookController {
 	 */
 	public function create()
 	{
-		//
+		return view('app.school.create');
 	}
 
 	/**
@@ -79,4 +83,13 @@ class ExamController extends GradebookController {
 		//
 	}
 
+    // Changes the currently active school
+    public function change(School $school)
+    {
+        $user = Auth::user();
+        $user->active_school = $school->id;
+        $user->active_semester = $school->semesters()->first() == null ? null : $school->semesters()->first()->id;
+        $user->save();
+        return redirect()->back();
+    }
 }

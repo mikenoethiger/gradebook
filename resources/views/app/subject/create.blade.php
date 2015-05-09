@@ -13,6 +13,7 @@
 @stop
 
 @section('content')
+    @include('subviews.semester-breadcrumb')
     <form action="{{ url('/subject') }}" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -22,6 +23,9 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-inbox"></i></span>
                         <input name="name" class="form-control" placeholder="Name">
+                        <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default" type="button">Erfassen</button>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,19 +42,12 @@
 
         <div class="row">
             @foreach($icons as $icon)
-            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-                <a href="#" class="thumbnail thumbnail-icon">
-                    <span class="{{ $icon->class }} fa-5x" data-icon-name="{{ $icon->class }}"></span>
-                </a>
-            </div>
-            @endforeach
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Erstellen</button>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                    <a href="#" class="thumbnail thumbnail-icon">
+                        <span class="{{ $icon->class }} fa-5x" data-icon-name="{{ $icon->class }}"></span>
+                    </a>
                 </div>
-            </div>
+            @endforeach
         </div>
     </form>
 @stop

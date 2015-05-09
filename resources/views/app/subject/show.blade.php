@@ -9,5 +9,5 @@
 @stop
 
 @section('content')
-
+    @include('subviews.semester-breadcrumb')
 @stop

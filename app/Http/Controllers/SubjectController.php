@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Icon;
+use App\Services\Shortcut;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Subject;
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class SubjectController extends GradebookController
 {
 
     /**
@@ -19,9 +20,9 @@ class SubjectController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Shortcut $gbRequest)
     {
-        return view('subject.index')->withSubjects(Subject::ofCurrentUser()->get());
+        return view('app.subject.index')->withSubjects(Subject::whereSemesterId($gbRequest->getActiveSemester()->id)->get());
     }
 
     /**
@@ -31,7 +32,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        return view('subject.create')->withIcons(Icon::all());
+        return view('app.subject.create')->withIcons(Icon::all());
     }
 
     /**
@@ -60,7 +61,7 @@ class SubjectController extends Controller
      */
     public function show(Requests\ShowSubjectRequest $request, $id)
     {
-        return view('subject.show')->withSubject(Subject::find($id));
+        return view('app.subject.show')->withSubject(Subject::find($id));
     }
 
     /**

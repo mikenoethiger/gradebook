@@ -24,7 +24,7 @@
                 @foreach($rows as $row)
                     <tr>
                         @foreach($row as $column)
-                            <td>{!! $column !!}</td>
+                            <a href="/dashboard"><td>{!! $column !!}</td></a>
                         @endforeach
                     </tr>
                 @endforeach
