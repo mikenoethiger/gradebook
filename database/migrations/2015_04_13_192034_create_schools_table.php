@@ -20,6 +20,7 @@ class CreateSchoolsTable extends Migration {
             $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->text('description')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 		});

@@ -30,8 +30,9 @@ class RedirectIfNoActiveSemester
             $firstSemester = $this->env->getActiveSchool()->semesters()->first();
             if ($firstSemester != null) {
                 $user->active_semester = $firstSemester->id;
-                $user->save();
-                return $next($request);
+                $user->push();
+                $user->activeSemester()->first();
+                return $user->activeSemester;
             }
             // Redirect to semester creation page and tell the user that he must create a semester
             return redirect('semester/create')->with('message', 'Um Noten erfassen zu können, musst du zuerst ein Semester erstellen. Du kannst auch mehrere Semester erstellen sowie deine Semester im nachhinein verwarten (editieren, löschen).');
