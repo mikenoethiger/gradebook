@@ -147,6 +147,8 @@ return [
         'App\Providers\ComposerServiceProvider',
         'App\Providers\GbServiceProvider',
         'App\Providers\GbEventServiceProvider',
+        // See: https://github.com/Grimthorr/laravel-user-settings
+        'Grimthorr\LaravelUserSettings\ServiceProvider',
     ],
 
 	/*
@@ -195,6 +197,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 
+        // App specific aliases
+        'Setting' => 'Grimthorr\LaravelUserSettings\Facade',
 	],
 
 ];

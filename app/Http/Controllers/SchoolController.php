@@ -16,7 +16,7 @@ class SchoolController extends Controller {
 	 */
 	public function index()
 	{
-		return view('app.school.index');
+		return view('app.school.index')->withSchools(Auth::user()->schools);
 	}
 
 	/**
@@ -84,12 +84,13 @@ class SchoolController extends Controller {
 	}
 
     // Changes the currently active school
+    // TODO Make a request validation
     public function change(School $school)
     {
-        $user = Auth::user();
-        $user->active_school = $school->id;
-        $user->active_semester = $school->semesters()->first() == null ? null : $school->semesters()->first()->id;
-        $user->save();
+        \Setting::set('activeSchoolId', $school->id);
+        \Setting::forget('activeSemesterId');
+        \Setting::save();
+
         return redirect()->back();
     }
 }

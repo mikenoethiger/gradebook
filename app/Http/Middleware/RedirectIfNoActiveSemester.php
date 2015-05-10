@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\Auth;
 class RedirectIfNoActiveSemester
 {
 
-    protected $env;
+    private $shortcut;
 
-    public function __construct(Shortcut $env)
+    public function __construct(Shortcut $shortcut)
     {
-        $this->env = $env;
+        $this->shortcut = $shortcut;
     }
 
     /**
@@ -24,15 +24,14 @@ class RedirectIfNoActiveSemester
     public function handle($request, Closure $next)
     {
         // Check if the user has an active semester
-        if ($this->env->getActiveSemester() == null) {
+        if ($this->shortcut->getActiveSemester() == null) {
             // Check if the user has created any semester yet and make it the active semester once he has created one
-            $user = Auth::user();
-            $firstSemester = $this->env->getActiveSchool()->semesters()->first();
+            $firstSemester = $this->shortcut->getActiveSchool()->semesters()->first();
             if ($firstSemester != null) {
-                $user->active_semester = $firstSemester->id;
-                $user->push();
-                $user->activeSemester()->first();
-                return $user->activeSemester;
+                \Setting::set('activeSemesterId', $firstSemester->id);
+                \Setting::save();
+
+                return $next($request);
             }
             // Redirect to semester creation page and tell the user that he must create a semester
             return redirect('semester/create')->with('message', 'Um Noten erfassen zu können, musst du zuerst ein Semester erstellen. Du kannst auch mehrere Semester erstellen sowie deine Semester im nachhinein verwarten (editieren, löschen).');

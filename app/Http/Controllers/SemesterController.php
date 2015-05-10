@@ -85,9 +85,10 @@ class SemesterController extends GradebookController {
 
     public function change(Requests\ChangeSemesterRequest $request, Semester $semester)
     {
-        $user = Auth::user();
-        $user->active_semester = $semester->id;
-        $user->save();
+        \Setting::set('activeSemesterId', $semester->id);
+        \Setting::save();
+
         return redirect()->back();
+
     }
 }

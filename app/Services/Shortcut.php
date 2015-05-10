@@ -24,12 +24,14 @@ class Shortcut
 {
     public function getActiveSchool()
     {
-        return Auth::user()->activeSchool;
+        $schoolId = \Setting::get('activeSchoolId');
+        return School::find($schoolId);
     }
 
     public function getActiveSemester()
     {
-        return Auth::user()->activeSemester;
+        $semesterId = \Setting::get('activeSemesterId');
+        return Semester::find($semesterId);
     }
 
     public function getAllSchools()
