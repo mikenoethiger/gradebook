@@ -36,7 +36,7 @@ class SchoolController extends Controller {
 	 */
 	public function store()
 	{
-		//
+        return view('app.school.create')->withMessage('This function is not implemented yet.');
 	}
 
 	/**

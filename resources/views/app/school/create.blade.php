@@ -12,7 +12,7 @@ $schoolBreadcrumb = false;
 @stop
 
 @section('content')
-    <form action="{{ url('/subject') }}" method="post">
+    <form action="{{ url('/school') }}" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <div class="row">
