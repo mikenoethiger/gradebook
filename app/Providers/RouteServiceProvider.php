@@ -27,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider {
 
         $router->model('school', 'App\School');
         $router->model('semester', 'App\Semester');
-        Log::info('Doing route service provider');
 	}
 
 	/**

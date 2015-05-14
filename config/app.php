@@ -145,8 +145,6 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
         'App\Providers\ComposerServiceProvider',
-        'App\Providers\GbServiceProvider',
-        'App\Providers\GbEventServiceProvider',
         // See: https://github.com/Grimthorr/laravel-user-settings
         'Grimthorr\LaravelUserSettings\ServiceProvider',
     ],

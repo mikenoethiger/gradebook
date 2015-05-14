@@ -1,7 +1,9 @@
 <?php namespace App;
 
+use app\Services\Round;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class Subject extends Model
@@ -55,6 +57,6 @@ class Subject extends Model
             $gradeStack += $grade->grade;
         }
 
-        return round($gradeStack / count($grades), 2);
+        return App::make('app\Services\Round')->quarter($gradeStack / count($grades));
     }
 }
