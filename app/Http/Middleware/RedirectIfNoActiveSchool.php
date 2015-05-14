@@ -24,9 +24,9 @@ class RedirectIfNoActiveSchool
      */
     public function handle($request, Closure $next)
     {
-        // Check if the user has an active semester
+        // Check if the user has an active school
         if ($this->shortcut->getActiveSchool() == null) {
-            // Check if the user has created any semester yet and make it the active semester once he has created one
+            // If the user has already added a school yet then make it the active one
             $firstSchool = Auth::user()->schools()->first();
             if ($firstSchool != null) {
                 \Setting::set('activeSchoolId', $firstSchool->id);
@@ -34,14 +34,10 @@ class RedirectIfNoActiveSchool
 
                 return $next($request);
             }
-            // Redirect to semester creation page and tell the user that he must create a semester
-            return redirect('semester/create')->with('message', 'Um Noten erfassen zu können, musst du zuerst ein Semester erstellen. Du kannst auch mehrere Semester erstellen sowie deine Semester im nachhinein verwarten (editieren, löschen).');
+            // Redirect to school creation page and tell the user that he must create a school
+            return redirect('school/create')->with('well', '<b>Gleich kanns los gehen!</b> An welche Schule gehst du zurzeit? (kann später angepasst werden)');
         }
         return $next($request);
-
-
-        // Check if the user has an active school
-
     }
 
 }

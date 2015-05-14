@@ -36,7 +36,8 @@ class SchoolController extends Controller {
 	 */
 	public function store()
 	{
-        return view('app.school.create')->withMessage('This function is not implemented yet.');
+        return redirect('school/create')->with('well', '<b>Gleich kanns los gehen!</b> An welche Schule gehst du zurzeit? (kann später angepasst werden)');
+        return view('app.school.create')->with('well', 'This function is not implemented yet.');
 	}
 
 	/**

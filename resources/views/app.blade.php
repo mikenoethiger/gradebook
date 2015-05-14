@@ -107,6 +107,15 @@
                     </ul>
                 </div>
             @endif
+            @if(Session::has('well'))
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="well well-lg">
+                            {!! Session::get('well') !!}
+                        </div>
+                    </div>
+                </div>
+            @endif
             @if(Session::has('message'))
                 <div class="row">
                     <div class="col-sm-12">

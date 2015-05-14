@@ -4,11 +4,11 @@ $schoolBreadcrumb = false;
 @extends('app')
 
 @section('title')
-    Notenbuch - Schule erfassen
+    Notenbuch - Schule hinzufügen
 @stop
 
 @section('header')
-    Schule erstellen
+    Schule Hinzufügen
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@ $schoolBreadcrumb = false;
                         <span class="input-group-addon"><i class="fa icon-school"></i></span>
                         <input name="name" class="form-control" placeholder="Name">
                         <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default" type="button">Erfassen</button>
+                                <button type="submit" class="btn btn-default" type="button">Hinzufügen</button>
                         </span>
                     </div>
                 </div>
