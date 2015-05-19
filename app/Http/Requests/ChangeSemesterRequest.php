@@ -16,7 +16,7 @@ class ChangeSemesterRequest extends Request {
 	public function authorize()
 	{
         $semesterId = $this->route('semester')->id;
-		return Semester::whereId($semesterId)->whereUserId(Auth::user()->id)->exists();
+		return Semester::find($semesterId)->user->id == Auth::id();
 	}
 
 	/**

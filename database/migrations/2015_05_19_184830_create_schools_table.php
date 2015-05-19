@@ -14,8 +14,8 @@ class CreateSchoolsTable extends Migration {
 	{
 		Schema::create('schools', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->timestamps();
+            $table->increments('id');
+            $table->timestamps();
             $table->softDeletes();
             $table->string('name');
             $table->date('start_date')->nullable();

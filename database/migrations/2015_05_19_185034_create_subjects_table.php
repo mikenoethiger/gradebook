@@ -14,12 +14,14 @@ class CreateSubjectsTable extends Migration {
 	{
 		Schema::create('subjects', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->timestamps();
+            $table->increments('id');
+            $table->timestamps();
             $table->softDeletes();
             $table->string('name');
             $table->string('icon');
             $table->text('description')->nullable();
+            $table->integer('semester_id')->unsigned();
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
 		});
 	}
 

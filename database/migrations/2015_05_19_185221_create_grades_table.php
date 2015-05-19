@@ -14,10 +14,11 @@ class CreateGradesTable extends Migration {
 	{
 		Schema::create('grades', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->timestamps();
+            $table->increments('id');
+            $table->timestamps();
             $table->softDeletes();
             $table->double('grade');
+            $table->float('weighting')->default(1);
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
 		});

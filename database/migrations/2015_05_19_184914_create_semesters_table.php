@@ -14,8 +14,8 @@ class CreateSemestersTable extends Migration {
 	{
 		Schema::create('semesters', function(Blueprint $table)
 		{
-			$table->increments('id');
-			$table->timestamps();
+            $table->increments('id');
+            $table->timestamps();
             $table->softDeletes();
             $table->integer('semester_number')->unsigned();
             $table->integer('school_id')->unsigned();
