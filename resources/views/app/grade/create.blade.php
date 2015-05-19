@@ -37,11 +37,27 @@
                         </div>
                     </div>
 
+                    <label for="weighting">Gewichtung</label>
                     <div class="form-group">
+                        <label class="radio-inline">
+                            <input type="radio" name="weighting" value="2"> x2
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="weighting" value="1" checked="checked"> x1
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="weighting" value="0.5"> x0.5
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="weighting" value="0.25"> x0.25
+                        </label>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="subject">Fach</label>
                         <select class="form-control" name="subject">
                             @foreach($subjects as $subject)
-                                <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                <option value="{{ $subject->id }}" {{ $subject->id == $selectedSubject->id ? 'selected' : '' }}>{{ $subject->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -83,14 +99,12 @@
         });
 
         $("select[name='subject']").change(function () {
-            refreshClickedSubjectIcon();
+            $('#grade-icon-' + $("select[name='subject']").val()).click();
         });
 
-        function refreshClickedSubjectIcon() {
-            $('#grade-icon-' + $("select[name='subject']").val()).click();
-        }
+        // Initially trigger a change which selects the icon for the selected subject
+        $("select[name='subject']").change();
 
-        // Initially trigger this function to select the first subject icon
-        refreshClickedSubjectIcon();
+        $("input[name='grade']").focus();
     </script>
 @stop

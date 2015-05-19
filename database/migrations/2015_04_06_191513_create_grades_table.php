@@ -18,9 +18,7 @@ class CreateGradesTable extends Migration {
 			$table->timestamps();
             $table->softDeletes();
             $table->double('grade');
-            $table->integer('user_id')->unsigned();
             $table->integer('subject_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
 		});
 	}

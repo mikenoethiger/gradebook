@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\School;
+use App\User;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -24,5 +26,15 @@ class EventServiceProvider extends ServiceProvider {
 	public function boot(DispatcherContract $events)
 	{
 		parent::boot($events);
+
+        School::created(function($school)
+        {
+            $school->addSemester();
+        });
+
+        User::created(function($user)
+        {
+            
+        });
 	}
 }

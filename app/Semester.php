@@ -22,12 +22,17 @@ class Semester extends Model {
     // See query scopes: http://laravel.com/docs/5.0/eloquent#query-scopes
     public function scopeOfCurrentUser($query)
     {
-        return $query->where('user_id', '=', Auth::id());
+        return scopeOfUser($query, Auth::id());
+    }
+
+    public function scopeOfUser($query, $userId)
+    {
+        return $query->join('schools', 'schools.id', '=', 'semesters.school_id')->whereUserId($userId)->select('semesters.*');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->school->user();
     }
 
     public function school()
@@ -46,6 +51,4 @@ class Semester extends Model {
     {
         return $this->hasManyThrough('App\Grade', 'App\Subject');
     }
-
-
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class SchoolController extends Controller {
 
@@ -34,10 +36,16 @@ class SchoolController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Requests\StoreSchoolRequest $request)
 	{
-        return redirect('school/create')->with('well', '<b>Gleich kanns los gehen!</b> An welche Schule gehst du zurzeit? (kann später angepasst werden)');
-        return view('app.school.create')->with('well', 'This function is not implemented yet.');
+        $school = new School();
+        $school->name = Input::get('name');
+        $school->description = Input::get('description');
+        $school->user_id = Auth::user()->id;
+        $school->save();
+
+        // redirect
+        return Redirect::to('/dashboard');
 	}
 
 	/**

@@ -20,7 +20,7 @@ class Round {
             case "tenth":
                 return tenth($value);
             default:
-                throw new InvalidArgumentException("'$fraction' is not a valid fraction value.");
+                return $value;
         }
     }
 

@@ -35,7 +35,27 @@ class Subject extends Model
     // See query scopes: http://laravel.com/docs/5.0/eloquent#query-scopes
     public function scopeOfCurrentUser($query)
     {
-        return $query->where('user_id', '=', Auth::id());
+        return $this->scopeOfUser($query, Auth::id());
+    }
+
+    public function scopeOfUser($query, $userId)
+    {
+        return $query
+            ->join('semesters', 'semesters.id', '=', 'subjects.semester_id')
+            ->join('schools', 'schools.id', '=', 'semesters.school_id')
+            ->whereUserId($userId)
+            ->select('subjects.*');
+    }
+
+    // Get user who owns this subject
+    public function user()
+    {
+        return $this->semester->school->user();
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo('App\Semester');
     }
 
     // See "Defining The Inverse Of A Relation": http://laravel.com/docs/5.0/eloquent#relationships
@@ -52,11 +72,15 @@ class Subject extends Model
             return -1;
         }
 
-        $gradeStack = 0;
+        $gradeSum = 0;
+        $weightSum = 0;
         foreach ($grades as $grade) {
-            $gradeStack += $grade->grade;
+            $weightSum += $grade->weighting;
+            $gradeSum += $grade->grade * $grade->weighting;
         }
 
-        return App::make('app\Services\Round')->quarter($gradeStack / count($grades));
+        $round = App::make('app\Services\Round');
+
+        return $round->tenth($gradeSum / $weightSum);
     }
 }

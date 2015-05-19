@@ -28,9 +28,12 @@ class GradeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create(Shortcut $gbRequest)
+	public function create(Shortcut $shortcut)
 	{
-		return view('app.grade.create')->withSubjects($gbRequest->getSubjects());
+        $subjects = $shortcut->getSubjects();
+        $selectedSubject = $shortcut->getActiveSemester()->subjects()->whereId(Input::get('subject'))->first();
+        $selectedSubject = $selectedSubject == null ? $subjects[0] : $selectedSubject;
+		return view('app.grade.create')->with(compact('subjects', 'selectedSubject'));
 	}
 
 	/**
@@ -43,6 +46,7 @@ class GradeController extends Controller {
 		$grade = new Grade();
         $grade->grade = Input::get('grade');
         $grade->subject_id = Input::get('subject');
+        $grade->weighting = Input::get('weighting');
         $grade->user_id = Auth::id();
         $grade->save();
 
@@ -90,25 +94,25 @@ class GradeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy(Requests\DestroyGradeRequest $request, Shortcut $gbRequest, $gradeId)
+	public function destroy(Requests\DestroyGradeRequest $request, Shortcut $shortcut, $gradeId)
 	{
         Log::info($gradeId);
 		$grade = Grade::find($gradeId);
         $grade->delete();
 
-        $restoreForm = sprintf("<form id='restore-grade' method='post' action='%s/grade/restore/%s'><input type='hidden' name='_token' value='%s'></form>", $gbRequest->getBasePath(), $grade->id, csrf_token());
+        $restoreForm = sprintf("<form id='restore-grade' method='post' action='%s/grade/restore/%s'><input type='hidden' name='_token' value='%s'></form>", $shortcut->getBasePath(), $grade->id, csrf_token());
         $restoreLink = sprintf("<a href='#' class='alert-link' onclick='$(\"#restore-grade\").submit();return false;'>Rückgängig.</a>");
         $message = sprintf("%s Note wurde gelöscht. %s", $restoreForm, $restoreLink);
 
-        return Redirect::to($gbRequest->getBasePath() . '/grade')->withMessage($message);
+        return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage($message);
 	}
 
-    public function restore(Requests\RestoreGradeRequest $request, Shortcut $gbRequest, $id)
+    public function restore(Requests\RestoreGradeRequest $request, Shortcut $shortcut, $id)
     {
         $grade = Grade::withTrashed()->find($id);
         $grade->restore();
 
-        return Redirect::to($gbRequest->getBasePath() . '/grade')->withMessage('Note wurde wiederhergestellt.');
+        return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage('Note wurde wiederhergestellt.');
     }
 
 }

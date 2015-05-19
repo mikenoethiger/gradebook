@@ -40,13 +40,14 @@ class SubjectController extends GradebookController
      *
      * @return Response
      */
-    public function store(StoreSubjectRequest $request)
+    public function store(StoreSubjectRequest $request, Shortcut $shortcut)
     {
         $subject = new Subject();
         $subject->name = Input::get('name');
         $subject->description = Input::get('description');
         $subject->icon = strlen(Input::get('icon')) == 0 ? "icon-books" : Input::get('icon');
         $subject->user_id = Auth::user()->id;
+        $subject->semester_id = $shortcut->getActiveSemester()->id;
         $subject->save();
 
         // redirect

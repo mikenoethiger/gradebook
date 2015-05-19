@@ -18,8 +18,6 @@ class CreateSemestersTable extends Migration {
 			$table->timestamps();
             $table->softDeletes();
             $table->integer('semester_number')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('school_id')->unsigned();
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
 		});

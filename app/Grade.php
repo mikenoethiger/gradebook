@@ -29,7 +29,7 @@ class Grade extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->subject->semester->school->user();
     }
 
     // See query scopes: http://laravel.com/docs/5.0/eloquent#query-scopes

@@ -15,7 +15,6 @@
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'active_school'], function () {
 
-
         Route::group(['middleware' => 'active_semester'], function() {
             Route::get('/dashboard', 'HomeController@dashboard');
 

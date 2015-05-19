@@ -1,12 +1,8 @@
 <?php namespace App\Services;
 
-use App\Grade;
 use App\School;
 use App\Semester;
-use App\Subject;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Setting;
 
 /**
  * Created by PhpStorm.
@@ -24,13 +20,13 @@ class Shortcut
 {
     public function getActiveSchool()
     {
-        $schoolId = \Setting::get('activeSchoolId');
+        $schoolId = Setting::get('activeSchoolId');
         return School::find($schoolId);
     }
 
     public function getActiveSemester()
     {
-        $semesterId = \Setting::get('activeSemesterId');
+        $semesterId = Setting::get('activeSemesterId');
         return Semester::find($semesterId);
     }
 

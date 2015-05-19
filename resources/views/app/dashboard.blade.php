@@ -9,7 +9,7 @@ function getPanelColor($gradeAverage)
         return "panel-yellow";
     } else if ($gradeAverage <= 3 && $gradeAverage >= 1) {
         return "panel-red";
-    } else if ($gradeAverage < 1) {
+    } else {
         return "panel-primary";
     }
 }
@@ -17,6 +17,12 @@ function getPanelColor($gradeAverage)
 ?>
 
 @extends('app')
+
+@section('head')
+    @parent
+
+    <link href="/css/dashboard.css" rel="stylesheet">
+@stop
 
 @section('title')
     Notenbuch - Dashboard
@@ -41,7 +47,8 @@ function getPanelColor($gradeAverage)
         @foreach($subjects as $subject)
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="panel {{ getPanelColor($subject->average()) }}">
-                    <div class="panel-heading">
+                    <div class="panel-heading"
+                         onclick="window.location.href='/grade/create?subject={{ $subject->id }}'">
 
                         <div class="row">
                             <div class="col-xs-3">

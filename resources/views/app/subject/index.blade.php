@@ -11,11 +11,11 @@
 @stop
 
 @section('title')
-    Notenbuch - Schulfächer
+    Notenbuch - Fächer
 @stop
 
 @section('header')
-    Schulfächer
+    Fächer
 @stop
 
 @section('content')
@@ -27,7 +27,7 @@
     foreach ($subjects as $subject) {
         $col1 = "<span class='{{ $subject->icon }} fa-2x'></span> " . $subject->name;
         $col2 = count($subject->grades) . " Noten";
-        $col3 = $subject->average();
+        $col3 = $subject->average() < 0 ? '-' : $subject->average();
         $col4 = sprintf("<form id='delete-subject-%s' method='post' action='/subject/%s'>
                             <input type='hidden' name='_token' value='%s'>
                             <input type='hidden' name='_method' value='delete'>
@@ -40,8 +40,8 @@
         $row = [$col1, $col2, $col3, $col4];
         array_push($rows, $row);
     }
-    $entityName = "Schulfach";
-    $entityNamePlural = "Schulfächer";
+    $entityName = "Fach";
+    $entityNamePlural = "Fächer";
     $createEntityUrl = $basePath . "/subject/create";
     ?>
     @include('subviews.entitytable')

@@ -5,11 +5,11 @@
 @stop
 
 @section('title')
-    Notenbuch - Schulfach erstellen
+    Notenbuch - Fach hinzufügen
 @stop
 
 @section('header')
-    Schulfach erstellen
+    Fach hinzufügen
 @stop
 
 @section('content')
@@ -24,7 +24,7 @@
                         <span class="input-group-addon"><i class="fa fa-inbox"></i></span>
                         <input name="name" class="form-control" placeholder="Name">
                         <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default" type="button">Erfassen</button>
+                                <button type="submit" class="btn btn-default" type="button">Hinzufügen</button>
                         </span>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12"><label>Icon für dieses Schulfach</label></div>
+            <div class="col-sm-12"><label>Icon für dieses Fach</label></div>
         </div>
 
         <div class="row">

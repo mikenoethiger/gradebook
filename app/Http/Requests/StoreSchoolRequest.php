@@ -1,6 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StoreSchoolRequest extends Request {
 
@@ -11,7 +12,7 @@ class StoreSchoolRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -21,9 +22,18 @@ class StoreSchoolRequest extends Request {
 	 */
 	public function rules()
 	{
+        $userId = Auth::user()->id;
 		return [
-			//
+			'name' => "required|unique:schools,name,NULL,id,user_id,$userId" // see http://laravel.com/docs/master/validation#rule-unique
 		];
 	}
 
+    // Override the messages function for custom messages
+    public function messages()
+    {
+        return [
+            'name.required' => 'Der Name darf nicht leer sein.',
+            'name.unique' => 'Dieser Name ist bereits vergeben.'
+        ];
+    }
 }

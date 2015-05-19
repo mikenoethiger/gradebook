@@ -58,9 +58,9 @@ class SchoolTableSeeder extends Seeder
 
         $user = User::whereEmail('noethiger.mike@gmail.com')->first();
 
-        $gibb = School::create(['name' => 'GIBB', 'user_id' => $user->id]);
-        $user->active_school = $gibb->id;
-        $user->save();
+        Log::debug($user->id);
+
+        School::create(['name' => 'GIBB', 'user_id' => $user->id]);
         School::create(['name' => 'Gerbrunnen', 'user_id' => $user->id]);
     }
 }
@@ -161,7 +161,7 @@ class SubjectTableSeeder extends Seeder
         ];
 
         $user = User::where('email', '=', 'noethiger.mike@gmail.com')->first();
-        $semesters = Semester::whereUserId($user->id)->get();
+        $semesters = Semester::ofUser($user->id)->get();
         $icons = Icon::all()->toArray();
         foreach ($semesters as $semester) {
             $numberOfSubjects = rand(2, 5);
@@ -171,7 +171,6 @@ class SubjectTableSeeder extends Seeder
                 Subject::create([
                     'name' => $subjectNames[$randSubjectNames[$i]],
                     'icon' => $icons[$randIcons[$i]]['class'],
-                    'user_id' => $user->id,
                     'semester_id' => $semester->id
                 ]);
             }
@@ -186,9 +185,9 @@ class GradeTableSeeder extends Seeder
     {
         DB::table('grades')->delete();
         $userId = User::where('email', '=', 'noethiger.mike@gmail.com')->first()->id;
-        Log::info($userId);
 
-        $allSubjects = Subject::where('user_id', '=', $userId)->get();
+        $allSubjects = Subject::ofUser($userId)->get();
+
         foreach ($allSubjects as $subject) {
             $numberOfGrades = rand(1, 3);
             for ($i = 0; $i < $numberOfGrades; $i++) {
@@ -196,7 +195,7 @@ class GradeTableSeeder extends Seeder
                 if ($grade < 6) {
                     $grade = $grade + round(mt_rand(0, mt_getrandmax() - 1) / mt_getrandmax(), 2);
                 }
-                Grade::create(['grade' => $grade, 'subject_id' => $subject->id, 'user_id' => $userId]);
+                Grade::create(['grade' => $grade, 'subject_id' => $subject->id, 'weighting' => 1]);
 
             }
         }
