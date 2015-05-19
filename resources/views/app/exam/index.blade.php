@@ -12,7 +12,6 @@ $schoolBreadcrumb = false;
 @stop
 
 @section('content')
-    @include('subviews.semester-breadcrumb')
     <div class="row">
         <div class="col-sm-12">
             <div class="well well-lg">Coming soon</div>

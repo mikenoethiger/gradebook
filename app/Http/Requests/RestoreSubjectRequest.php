@@ -17,8 +17,7 @@ class RestoreSubjectRequest extends Request
     {
         $subjectId = $this->route('id');
 
-        return Subject::withTrashed()->where('id', $subjectId)
-            ->where('user_id', Auth::id())->exists();
+        return Subject::withTrashed()->find($subjectId)->user->id == Auth::id();
     }
 
     /**

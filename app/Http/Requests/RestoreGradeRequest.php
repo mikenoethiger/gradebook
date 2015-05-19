@@ -15,8 +15,7 @@ class RestoreGradeRequest extends Request {
 	{
         $gradeId = $this->route('grade');
 
-        return Grade::withTrashed()->where('id', $gradeId)
-            ->where('user_id', Auth::id())->exists();
+        return Grade::withTrashed()->find($gradeId)->user->id == Auth::id();
 	}
 
 	/**

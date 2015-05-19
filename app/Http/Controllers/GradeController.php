@@ -31,6 +31,9 @@ class GradeController extends Controller {
 	public function create(Shortcut $shortcut)
 	{
         $subjects = $shortcut->getSubjects();
+        if ($shortcut->getActiveSemester()->subjects()->count() == 0) {
+            return Redirect::to('/dashboard');
+        }
         $selectedSubject = $shortcut->getActiveSemester()->subjects()->whereId(Input::get('subject'))->first();
         $selectedSubject = $selectedSubject == null ? $subjects[0] : $selectedSubject;
 		return view('app.grade.create')->with(compact('subjects', 'selectedSubject'));
@@ -47,7 +50,6 @@ class GradeController extends Controller {
         $grade->grade = Input::get('grade');
         $grade->subject_id = Input::get('subject');
         $grade->weighting = Input::get('weighting');
-        $grade->user_id = Auth::id();
         $grade->save();
 
         $gradeVal = $grade->grade;

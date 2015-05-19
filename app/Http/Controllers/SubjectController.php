@@ -46,7 +46,6 @@ class SubjectController extends GradebookController
         $subject->name = Input::get('name');
         $subject->description = Input::get('description');
         $subject->icon = strlen(Input::get('icon')) == 0 ? "icon-books" : Input::get('icon');
-        $subject->user_id = Auth::user()->id;
         $subject->semester_id = $shortcut->getActiveSemester()->id;
         $subject->save();
 

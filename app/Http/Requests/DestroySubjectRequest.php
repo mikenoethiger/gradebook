@@ -14,8 +14,7 @@ class DestroySubjectRequest extends Request {
 	public function authorize()
 	{
         $subjectId = $this->route('subject');
-        return Subject::withTrashed()->where('id', $subjectId)
-            ->where('user_id', Auth::id())->exists();
+        return Subject::find($subjectId)->user->id ==  Auth::id();
 	}
 
 	/**

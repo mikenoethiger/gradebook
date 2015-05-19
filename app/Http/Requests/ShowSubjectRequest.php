@@ -14,8 +14,7 @@ class ShowSubjectRequest extends Request {
 	{
         $subjectId = $this->route('subject');
 
-        return Subject::where('id', $subjectId)
-            ->where('user_id', Auth::id())->exists();
+        return Subject::where('id', $subjectId)->user->id == Auth::id();
 	}
 
 	/**

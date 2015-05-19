@@ -31,5 +31,4 @@ class ChangeSemesterRequest extends Request {
 			'semester' => 'exists:semesters,id,school_id,' . $env->getActiveSchool()->id
 		];
 	}
-
 }

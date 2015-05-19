@@ -73,7 +73,7 @@
                             <a href="{{ url($basePath) . '/semester' }}"><i class="fa fa-graduation-cap fa-fw"></i> Semester <span class="label label-default" style="float: right;">coming soon</span></a>
                         </li>
                         <li>
-                            <a href="{{ url($basePath . '/school') }}"><i class="fa icon-school fa-fw"></i> Schulen <span class="label label-default" style="float: right;">coming soon</span></a>
+                            <a href="{{ url($basePath . '/school') }}"><i class="fa icon-school fa-fw"></i> Schulen</a>
                         </li>
                     </ul>
                 </div>
