@@ -100,6 +100,6 @@ class SchoolController extends Controller {
         \Setting::forget('activeSemesterId');
         \Setting::save();
 
-        return redirect()->back();
+        return redirect()->to('/dashboard');
     }
 }

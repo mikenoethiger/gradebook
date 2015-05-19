@@ -88,7 +88,7 @@ class SemesterController extends GradebookController {
         \Setting::set('activeSemesterId', $semester->id);
         \Setting::save();
 
-        return redirect()->back();
+        return redirect()->to('/dashboard');
 
     }
 }

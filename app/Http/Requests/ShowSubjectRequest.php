@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use App\Subject;
+use Illuminate\Support\Facades\Auth;
 
 class ShowSubjectRequest extends Request {
 
@@ -14,7 +15,7 @@ class ShowSubjectRequest extends Request {
 	{
         $subjectId = $this->route('subject');
 
-        return Subject::where('id', $subjectId)->user->id == Auth::id();
+        return Subject::find($subjectId)->user->id == Auth::id();
 	}
 
 	/**
