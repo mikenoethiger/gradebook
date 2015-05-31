@@ -40,3 +40,14 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('/mail', function() {
+    \Illuminate\Support\Facades\Mail::raw('Test Email', function($message)
+    {
+        $message->subject('Test');
+        $message->from('disnotebuech@gmail.com', 'Notenbuch');
+        $message->to('noethiger.mike@gmail.com');
+    });
+
+    return "Email sent";
+});

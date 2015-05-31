@@ -5,6 +5,8 @@
 
             <!-- MetisMenu CSS -->
     <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="/css/custom.css" rel="stylesheet">
+
 @stop
 
 
@@ -90,23 +92,9 @@
                     </h1>
                 </div>
             </div>
-            @if(isset($schoolBreadcrumb) && $schoolBreadcrumb)
-                <div>
-                    <ul class="breadcrumb">
-                        <li><a href="#">Link1</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Operations <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Operations 1</a></li>
-                                <li><a href="#">Operations 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Link2</a></li>
-                    </ul>
-                </div>
-            @endif
+
+            @yield('before-messages')
+
             @if(Session::has('well'))
                 <div class="row">
                     <div class="col-sm-12">

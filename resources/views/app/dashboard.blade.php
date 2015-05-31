@@ -1,19 +1,24 @@
 <?php
-function getPanelColor($gradeAverage)
-{
-    if ($gradeAverage <= 6 && $gradeAverage > 5) {
-        return "panel-green";
-    } else if ($gradeAverage <= 5 && $gradeAverage > 4) {
-        return "panel-primary";
-    } else if ($gradeAverage <= 4 && $gradeAverage > 3) {
-        return "panel-yellow";
-    } else if ($gradeAverage <= 3 && $gradeAverage >= 1) {
-        return "panel-red";
-    } else {
+use \Illuminate\Support\Facades\App;
+use \App\Services\GradeJudge;
+use \App\Exceptions\NoGradesException;
+
+function getClassForAverage($subject) {
+    $gradeJudge = App::make('App\Services\GradeJudge');
+
+    $classifications = [];
+    $classifications[GradeJudge::VERY_BAD] = "panel-red";
+    $classifications[GradeJudge::BAD] = "panel-yellow";
+    $classifications[GradeJudge::GOOD] = "panel-primary";
+    $classifications[GradeJudge::VERY_GOOD] = "panel-green";
+    try {
+        //return $classifications[$gradeJudge->classify($subject->average())];
+    } catch (NoGradesException $exception) {
         return "panel-primary";
     }
 }
 
+$subjectFormatter = App::make('SubjectFormatter');
 ?>
 
 @extends('app')
@@ -42,20 +47,20 @@ function getPanelColor($gradeAverage)
                         beginnen!</a></div>
             </div>
         </div>
-    @endif
+    @else
     <div class="row">
         @foreach($subjects as $subject)
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <div class="panel {{ getPanelColor($subject->average()) }}">
+                <div class="panel {{  $subjectFormatter->cssClassForAverage($subject) }}">
                     <div class="panel-heading"
-                         onclick="window.location.href='/grade/create?subject={{ $subject->id }}'">
+                         onclick="window.location.href='/subject/{{ $subject->id }}'">
 
                         <div class="row">
                             <div class="col-xs-3">
                                 <span class="{{ $subject->icon }} fa-5x"></span>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">{{ $subject->average() < 0 ? "-" : $subject->average() }}</div>
+                                <div class="huge">{{ $subjectFormatter->average($subject) }}</div>
                                 <div>{{ $subject->name }}</div>
                             </div>
                         </div>
@@ -72,4 +77,5 @@ function getPanelColor($gradeAverage)
             </div>
         @endforeach
     </div>
+    @endif
 @stop

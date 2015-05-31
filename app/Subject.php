@@ -1,6 +1,7 @@
 <?php namespace App;
 
-use app\Services\Round;
+use App\Exceptions\NoGradesException;
+use App\Gradebook\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
@@ -69,8 +70,10 @@ class Subject extends Model
     {
         $grades = $this->grades;
         if (count($grades) == 0) {
-            return -1;
+            throw new NoGradesException("The subject '" . $this->name . "' has no grades.");
         }
+
+        return Helper::avgOfArrayItems($this->grades()->lists('grade'));
 
         $gradeSum = 0;
         $weightSum = 0;
@@ -79,7 +82,7 @@ class Subject extends Model
             $gradeSum += $grade->grade * $grade->weighting;
         }
 
-        $round = App::make('app\Services\Round');
+        $round = App::make('App\Services\Round');
 
         return $round->tenth($gradeSum / $weightSum);
     }

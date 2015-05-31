@@ -1,5 +1,7 @@
 <?php namespace App\Providers;
 
+use App\Gradebook\Helpers\SubjectFormatter;
+use App\Services\GradeJudge;
 use App\Services\Round;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,8 +33,15 @@ class AppServiceProvider extends ServiceProvider {
 			'App\Services\Registrar'
         );
 
-        $this->app->singleton('app\Services\Round', function ($app) {
+        $this->app->singleton('Round', function ($app) {
             return new Round();
+        });
+        $this->app->singleton('GradeJudge', function ($app) {
+            return new GradeJudge();
+        });
+        // TODO I'm unsure about singletons. A webserver deals with concurrency. If we include settings this might cause troubles (different settings depending on the context)
+        $this->app->singleton('SubjectFormatter', function($app) {
+            return new SubjectFormatter($app->make('Round'), $app->make('GradeJudge'));
         });
 	}
 

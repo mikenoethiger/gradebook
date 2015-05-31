@@ -21,6 +21,11 @@
                             </div>
                         @endif
 
+                        @if(Session::has('status'))
+                            <div class="alert alert-success">
+                                {{ Session::get('status') }}
+                            </div>
+                        @endif
 
                         <form role="form" method="POST" action="{{ url('/password/email') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">

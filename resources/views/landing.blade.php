@@ -88,7 +88,7 @@
                     <hr class="light">
                     <p class="text-faded">Im Notenbuch kannst du alle deine Schulnoten eintragen. Ganz einfach - zuerst
                         erfasst du deine Schulfächer und dann kann's los gehen! Viel unterwegs? Kein
-                        Problem, das Notenbuch bietet auch eine mobile Ansicht.</p>
+                        Problem, das Notenbuch bietet auch eine mobile Ansicht für Tablet und Smartphone.</p>
                     <a href="#services" class="btn btn-default btn-xl page-scroll">Ich will mehr wissen!</a>
                 </div>
             </div>

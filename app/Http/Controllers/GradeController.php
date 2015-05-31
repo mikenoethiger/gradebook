@@ -106,15 +106,17 @@ class GradeController extends Controller {
         $restoreLink = sprintf("<a href='#' class='alert-link' onclick='$(\"#restore-grade\").submit();return false;'>Rückgängig.</a>");
         $message = sprintf("%s Note wurde gelöscht. %s", $restoreForm, $restoreLink);
 
-        return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage($message);
-	}
+//        return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage($message);
+        return Redirect::back()->withMessage($message);
+    }
 
     public function restore(Requests\RestoreGradeRequest $request, Shortcut $shortcut, $id)
     {
         $grade = Grade::withTrashed()->find($id);
         $grade->restore();
 
-        return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage('Note wurde wiederhergestellt.');
+        //return Redirect::to($shortcut->getBasePath() . '/grade')->withMessage('Note wurde wiederhergestellt.');
+        return Redirect::back()->withMessage('Note wurde wiederhergestellt.');
     }
 
 }

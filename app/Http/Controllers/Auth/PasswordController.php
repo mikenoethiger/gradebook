@@ -18,6 +18,10 @@ class PasswordController extends Controller {
 	|
 	*/
 
+    // Prop will be used by ResetsPasswords trait for redirecting after
+    // password has been resetted
+    private $redirectPath = '/auth/login';
+
 	use ResetsPasswords;
 
 	/**

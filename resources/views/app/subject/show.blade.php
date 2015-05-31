@@ -19,13 +19,17 @@ $worst = $worstGrade == null ? '-' : $worstGrade->grade;
 @section('content')
     @include('subviews.semester-breadcrumb', ['readonly' => true])
 
+    <div class="row">
+        <div class="col-sm-12">
+            <span class="label label-primary tag">Durchschnitt: {{ $average }}</span>
 
-    <h4>
-        <span class="label label-info">{{ $subject->grades()->count() }} Noten</span>
-        <span class="label label-info">Durchschnitt {{ $average }}</span>
-        <span class="label label-info">Beste Note {{ $best }}</span>
-        <span class="label label-info">Schlechteste Note {{ $worst }}</span>
-    </h4>
+            <div style="float: right;">
+                <span class="label label-default tag">{{ $subject->grades()->count() }} Noten</span>
+                <span class="label label-default tag">Beste: {{ $best }}</span>
+                <span class="label label-default tag">Schlechteste: {{ $worst }}</span>
+            </div>
+        </div>
+    </div>
     <br>
 
     <?php
